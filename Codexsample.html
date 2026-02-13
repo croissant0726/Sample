@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Paper Scissors Rock</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        color: #1f2933;
+      }
+
+      main {
+        width: min(520px, 90vw);
+        background: #ffffff;
+        padding: 2rem;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+      }
+
+      h1 {
+        margin-top: 0;
+        font-size: 2rem;
+      }
+
+      label {
+        font-weight: 600;
+      }
+
+      select,
+      button {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem;
+        border-radius: 12px;
+        border: 1px solid #cbd2d9;
+      }
+
+      button {
+        cursor: pointer;
+        background: #2563eb;
+        color: #fff;
+        border-color: #1d4ed8;
+        font-weight: 600;
+      }
+
+      button:hover {
+        background: #1d4ed8;
+      }
+
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+      }
+
+      .result {
+        padding: 1rem;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+      }
+
+      .result p {
+        margin: 0.4rem 0;
+      }
+
+      .status {
+        font-size: 1.4rem;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Paper Scissors Rock</h1>
+      <p>Pick your move, hit play, and see who wins.</p>
+      <div class="controls">
+        <label for="choice">Your choice</label>
+        <select id="choice">
+          <option value="rock">Rock</option>
+          <option value="paper">Paper</option>
+          <option value="scissors">Scissors</option>
+        </select>
+        <button id="play" type="button">Play</button>
+      </div>
+      <div class="result" aria-live="polite">
+        <p>Computer chose: <strong id="computer-choice">—</strong></p>
+        <p>Your result: <span class="status" id="status">—</span></p>
+      </div>
+    </main>
+    <script>
+      const choiceSelect = document.getElementById("choice");
+      const playButton = document.getElementById("play");
+      const computerChoice = document.getElementById("computer-choice");
+      const status = document.getElementById("status");
+
+      const choices = ["rock", "paper", "scissors"];
+      const winMap = {
+        rock: "scissors",
+        paper: "rock",
+        scissors: "paper",
+      };
+
+      playButton.addEventListener("click", () => {
+        const playerChoice = choiceSelect.value;
+        const computerPick = choices[Math.floor(Math.random() * choices.length)];
+
+        computerChoice.textContent = computerPick;
+
+        if (playerChoice === computerPick) {
+          status.textContent = "Draw";
+          return;
+        }
+
+        if (winMap[playerChoice] === computerPick) {
+          status.textContent = "Won";
+          return;
+        }
+
+        status.textContent = "Lost";
+      });
+    </script>
+  </body>
+</html>
